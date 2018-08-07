@@ -1,0 +1,20 @@
+version: "2"
+services:
+  app:
+    restart: always
+    build: .
+    command: 
+      nodemon /usr/src/app/index.js --exec babel-node 
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo
+    volumes:
+      - data-volumes:/data/db
+    ports:
+      - "27017:27017"
+volumes:
+    data-volumes:
+    

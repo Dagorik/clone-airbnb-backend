@@ -50,13 +50,12 @@ const UserSchema = new Schema({
         required:true
     },
     "user_pay":{
-        type:String,
-        required:true
+        type:String
     }
 },{collection:"Users",timestamps:true});
 
 
-UserSchema.pre('save',(next) => {
+UserSchema.pre('save',function(next){
     let user = this;
     if (!user.isModified('password')){return next();}
     bcrypt.genSalt(SALT,(err,salt)=>{

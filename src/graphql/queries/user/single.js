@@ -12,6 +12,7 @@ const querySingleUser = {
         }
     },
     resolve(root,params){
+        console.log(root)
         const user = User.findById(params.id).exec()
         return user
     }

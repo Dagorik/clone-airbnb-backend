@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import graphQLHTTP from 'express-graphql'
 import schema from './src/graphql'
 import User from './src/models/users'
+import Propiedad from './src/models/propiedades'
 
 const app = express();
 const PORT = process.env.PORT || 8080
@@ -38,6 +39,7 @@ app.post('/user/create',(req,res) => {
         })
 
 });
+
 
 app.use('/graphql',graphQLHTTP( (req,res) => ({
     schema,

@@ -2,10 +2,12 @@ import express from 'express'
 import parser from 'body-parser'
 import cors from 'cors';
 import mongoose from 'mongoose';
+import graphQLHTTP from 'express-graphql'
+import schema from './src/graphql'
 import User from './src/models/users'
 
 const app = express();
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 8080
 const mongoURI = process.env.MONGODB_URI || "mongodb://prueba:Test1234567890@ds259079.mlab.com:59079/cinta-roja"
 
 mongoose.connect(mongoURI,{useNewUrlParser: true});
@@ -37,5 +39,10 @@ app.post('/user/create',(req,res) => {
 
 });
 
+app.use('/graphql',graphQLHTTP( (req,res) => ({
+    schema,
+    graphiql:true,
+    pretty:true
+})));
 
 app.listen(PORT,()=>console.log(`Server on ${PORT}`))

@@ -19,7 +19,6 @@ export default {
         }
     },
     resolve(root,params){
-        //TODO hacer la validacion de las fechas.
         return Reservacion.findByIdAndUpdate(params.id,{$set:{...params.data}},{new:true})
             .then(reservacion => reservacion)
             .catch(erre =>  Error('Error al hacer el update'))

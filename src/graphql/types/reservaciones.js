@@ -5,7 +5,8 @@ import {
     GraphQLInt,
     GraphQLNonNull,
     GraphQLList,
-    GraphQLBoolean
+    GraphQLBoolean,
+    GraphQLInputObjectType
 } from 'graphql'
 
 import {UserType} from './users'
@@ -34,6 +35,31 @@ export const ReservacionesType = new GraphQLObjectType({
                 const {propiedad} = reservacion
                 return Propiedad.findById(propiedad).exec()
             }
+        },
+        status_pago:{
+            type:GraphQLBoolean
+        },
+        numero_personas:{
+            type:GraphQLInt
+        },
+        status_reservacion:{
+            type:GraphQLBoolean
+        },
+        cargo_extra:{
+            type:GraphQLInt
+        }
+    })
+})
+
+export const ReservacionesInputType = new GraphQLInputObjectType({
+    name:"addReservaciones",
+    description:"Agrega reservaciones a la base de datos",
+    fields: () => ({
+        user:{
+            type:GraphQLNonNull(GraphQLID)
+        },
+        propiedad:{
+            type:GraphQLNonNull(GraphQLID)
         },
         status_pago:{
             type:GraphQLBoolean

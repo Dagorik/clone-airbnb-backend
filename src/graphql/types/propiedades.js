@@ -4,7 +4,8 @@ import {
     GraphQLID,
     GraphQLInt,
     GraphQLNonNull,
-    GraphQLList
+    GraphQLList,
+    GraphQLInputObjectType
 } from 'graphql'
 
 import {UserType} from './users'
@@ -84,6 +85,49 @@ export const PropiedadesType = new GraphQLObjectType({
                 const {servicios} = propiedad
                 return Servicio.find({_id:{$in:servicios}}).exec()
             }
+        },
+        fotos:{
+            type: GraphQLList(GraphQLString),
+        },
+        disponibilidad_inicial:{
+            type: GraphQLString
+        },
+        disponibilidad_final:{
+            type: GraphQLString
+        }
+    })
+})
+
+export const PropiedadesInputType = new GraphQLInputObjectType({
+    name:"addPropiedades",
+    description:"Agrega propiedades a la base de datos",
+    fields: () => ({
+        nombre:{
+            type:GraphQLString
+        },
+        descripcion_corta:{
+            type:GraphQLString
+        },
+        descripcion_larga:{
+            type:GraphQLString
+        },
+        ubicacion:{
+            type:GraphQLString
+        },
+        pais:{
+            type:GraphQLString
+        },
+        user:{
+            type:GraphQLNonNull(GraphQLID),
+        },
+        tipo:{
+            type:GraphQLInt
+        },
+        precio:{
+            type:GraphQLInt
+        },
+        servicios:{
+            type: new GraphQLList(GraphQLID),
         },
         fotos:{
             type: GraphQLList(GraphQLString),

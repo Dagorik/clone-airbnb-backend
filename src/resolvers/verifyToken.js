@@ -18,9 +18,7 @@ export const verifyToken = (token) => {
     jwt.verify(receivedToken,secret,(err,payload) => {
         if (err) throw new Error('Token invalido')
         console.log(payload)
-        user = User.findById(payload.id).exec().then(user => {
-            console.log(user)
-        })
+        user = User.findById(payload.id).exec()
     })
 
     if(!user) throw new Error('Usuario no existe')

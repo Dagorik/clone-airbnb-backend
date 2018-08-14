@@ -68,4 +68,10 @@ UserSchema.pre('save',function(next){
     });
 });
 
+UserSchema.methods.comparePassword =  function (inputPassword,cb) {
+    bcrypt.compare(inputPassword,this.password,function (err,isMatch){
+        cb(null,isMatch)
+    })
+}
+
 export default mongoose.model('Users',UserSchema)

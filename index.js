@@ -6,6 +6,8 @@ import graphQLHTTP from 'express-graphql'
 import schema from './src/graphql'
 import User from './src/models/users'
 import Propiedad from './src/models/propiedades'
+import {createToken} from './src/resolvers/createToken'
+import {verifyToken} from './src/resolvers/verifyToken'
 
 const app = express();
 const PORT = process.env.PORT || 8080
@@ -40,11 +42,33 @@ app.post('/user/create',(req,res) => {
 
 });
 
+app.post('/login',(req,res) =>{
+    const token = createToken(req.body.username,req.body.password)
+        .then(token => {
+            res.status(201).json({token})
+        })
+        .catch(() => {
+            res.status(403).json({message:'Login Failed :('})
+        })
+});
+
+app.use('/graphql',(req,res,next)=>{
+    const token  = req.headers['authorization'];
+    try{
+        req.user = verifyToken(token)
+        next();
+    }catch(err){
+        res.status(401).json({message:err.message})
+    }
+})
 
 app.use('/graphql',graphQLHTTP( (req,res) => ({
     schema,
     graphiql:true,
-    pretty:true
+    pretty:true,
+    context:{
+        user:req.user
+    }
 })));
 
 app.listen(PORT,()=>console.log(`Server on ${PORT}`))

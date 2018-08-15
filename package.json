@@ -6,12 +6,19 @@
   "scripts": {
     "build": "rimraf dist/ && babel ./ --out-dir dist/ --ignore ./node_modules,./.babelrc,./package.json,./npm-debug.log --copy-files",
     "start": "npm run build && node dist/index.js",
-    "test": "jest --forceExit",
+    "test": "jest  --detectOpenHandles --forceExit",
     "dev": "nodemon index.js --exec babel-node --presets es2015,stage-2"
   },
   "jest":{
     "testEnvironment":"node",
-    "testPathIgnorePatterns":["/node_modules"],
+    "testPathIgnorePatterns":[
+      "/node_modules"
+    ],
+    "coverageReporters":[
+      "lcov",
+      "html",
+      "json"
+    ],
     "moduleNameMapper":{
       "^mongoose$":"<rootDir>/node_modules/mongoose"
     }

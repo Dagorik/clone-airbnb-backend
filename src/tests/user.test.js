@@ -46,22 +46,17 @@ describe('Prueba de User',async  () => {
         "correo":"dagorik4@gmai.com",
         "fecha_nacimiento":"1994-04-12",
         "password":"elpassword2",
-        "username":"sssa",
+        "username":"asdads",
         "genero":"M",
         "pais":"MX",
         "ubicacion":"EN MI CASITA",
         "rol":"USER"
     })
-    console.log('creo el usuario',user)
     const newUser = await user.save();
-    console.log('ya lo guardo')
     const context =  {user:newUser}
-    console.log('A punto de pasarle el schema')
     const result = await graphql(schema,query,{},context);
-    console.log('Ya existe resutl')
-    console.log(result)
     const {data} = result;
-    expect(data.me._id).toBe(user._id.toString());
+    expect(data.me._id).toBe(newUser._id.toString());
   })  
 })
 

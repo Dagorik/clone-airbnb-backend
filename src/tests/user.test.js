@@ -7,8 +7,7 @@ import generarToken from '../resolvers/createToken'
 
 describe('Prueba de User',async  () => {
     
-    beforeEach(async () => await setupTest());
-    
+    beforeAll(async () => await setupTest());
     it('Probando query sin token deberia ser null',async () => {
         //language=GraphQL
         const query = `
@@ -20,50 +19,50 @@ describe('Prueba de User',async  () => {
             }
         }
         `;
-        console.log('a,msdnam,nd')
         const result = await graphql(schema,query,{},{})
             const {data} = result;
             expect(data.me).toBe(null)
         
     })
 
-//     it('Probando query de me que deberia ser un usuario',async () => {
-//         console.log('Iniciando el test 2')
-//         //language=GraphQL
-//         const query = `
+    it('Probando query de me que deberia ser un usuario',async () => {
+        console.log('Iniciando el test 2')
+        //language=GraphQL
+        const query = `
       
-//         query{
-//             me{
-//                 _id,
-//                 name
-//             }
-//         }
+        query{
+            me{
+                _id,
+                nombre
+            }
+        }
     
-//     `;
-//     console.log('Paso const query')
+    `;
+    console.log('Paso const query')
 
-//     const user = new User({
-//         "nombre":"Juanito 2",
-//         "apellidos":"Perex 2",
-//         "correo":"dagorik4@gmai.com",
-//         "fecha_nacimiento":"1994-04-12",
-//         "password":"elpassword2",
-//         "username":"ad",
-//         "genero":"M",
-//         "pais":"MX",
-//         "ubicacion":"EN MI CASITA",
-//         "rol":"USER"
-//     })
-//     console.log('creo el usuario',user)
-//     const userSaved = await  user.save();
-//     console.log('ya lo guardo')
-//     const context =  {user:userSaved}
-//     console.log('A punto de pasarle el schema')
-//     const result = await graphql(schema,query,{},context);
-//     console.log('Ya existe resutl')
-//     const {data} = result;
-//     expect(data).toBe(undefined);
-//   })  
+    const user = new User({
+        "nombre":"Juanito 2",
+        "apellidos":"Perex 2",
+        "correo":"dagorik4@gmai.com",
+        "fecha_nacimiento":"1994-04-12",
+        "password":"elpassword2",
+        "username":"sssa",
+        "genero":"M",
+        "pais":"MX",
+        "ubicacion":"EN MI CASITA",
+        "rol":"USER"
+    })
+    console.log('creo el usuario',user)
+    const newUser = await user.save();
+    console.log('ya lo guardo')
+    const context =  {user:newUser}
+    console.log('A punto de pasarle el schema')
+    const result = await graphql(schema,query,{},context);
+    console.log('Ya existe resutl')
+    console.log(result)
+    const {data} = result;
+    expect(data.me._id).toBe(user._id.toString());
+  })  
 })
 
 

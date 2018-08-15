@@ -65,7 +65,7 @@ function clearDatabase() {
     });
   }
 
-export async function setupTest() {
-  await connect();
+export  function setupTest() {
+   connect();
    //await clearDatabase();
 }
